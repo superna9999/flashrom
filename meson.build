@@ -68,6 +68,7 @@ config_usbblaster_spi = get_option('config_usbblaster_spi')
 config_stlinkv3_spi = get_option('config_stlinkv3_spi')
 config_lspcon_i2c_spi = get_option('config_lspcon_i2c_spi')
 config_realtek_mst_i2c_spi = get_option('config_realtek_mst_i2c_spi')
+config_gl32xx_spi = get_option('config_gl32xx_spi')
 
 cargs = []
 deps = []
@@ -98,6 +99,7 @@ else
   config_digilent_spi = false
   config_developerbox_spi = false
   config_pickit2_spi = false
+  config_gl32xx_spi = false
 endif
 
 # some programmers require libpci
@@ -308,6 +310,10 @@ endif
 if config_realtek_mst_i2c_spi
   srcs += 'realtek_mst_i2c_spi.c'
   cargs += '-DCONFIG_REALTEK_MST_I2C_SPI=1'
+endif
+if config_gl32xx_spi
+  srcs += 'gl32xx_spi.c'
+  cargs += '-DCONFIG_GL32XX_SPI=1'
 endif
 
 # bitbanging SPI infrastructure

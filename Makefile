@@ -223,6 +223,12 @@ UNSUPPORTED_FEATURES += CONFIG_JLINK_SPI=yes
 else
 override CONFIG_JLINK_SPI = no
 endif
+# gl32xx_spi is also not available for DOS
+ifeq ($(CONFIG_GL32XX_SPI), yes)
+UNSUPPORTED_FEATURES += CONFIG_GL32XX_SPI=yes
+else
+override CONFIG_GL32XX_SPI = no
+endif
 endif
 
 # FIXME: Should we check for Cygwin/MSVC as well?
@@ -447,6 +453,11 @@ ifeq ($(CONFIG_CH341A_SPI), yes)
 UNSUPPORTED_FEATURES += CONFIG_CH341A_SPI=yes
 else
 override CONFIG_CH341A_SPI = no
+endif
+ifeq ($(CONFIG_GL32XX_SPI), yes)
+UNSUPPORTED_FEATURES += CONFIG_GL32XX_SPI=yes
+else
+override CONFIG_GL32XX_SPI = no
 endif
 endif
 
@@ -794,6 +805,9 @@ CONFIG_DIGILENT_SPI ?= yes
 # Disable J-Link for now.
 CONFIG_JLINK_SPI ?= no
 
+# Enable GL32xx for now
+CONFIG_GL32XX_SPI ?= yes
+
 # Disable wiki printing by default. It is only useful if you have wiki access.
 CONFIG_PRINT_WIKI ?= no
 
@@ -822,6 +836,7 @@ override CONFIG_DEVELOPERBOX_SPI = no
 override CONFIG_PICKIT2_SPI = no
 override CONFIG_RAIDEN_DEBUG_SPI = no
 override CONFIG_STLINKV3_SPI = no
+override CONFIG_GL32XX_SPI = no
 endif
 ifeq ($(CONFIG_ENABLE_LIBPCI_PROGRAMMERS), no)
 override CONFIG_INTERNAL = no
@@ -1142,6 +1157,12 @@ ifeq ($(CONFIG_JLINK_SPI), yes)
 NEED_LIBJAYLINK += CONFIG_JLINK_SPI
 FEATURE_CFLAGS += -D'CONFIG_JLINK_SPI=1'
 PROGRAMMER_OBJS += jlink_spi.o
+endif
+
+ifeq ($(CONFIG_GL32XX_SPI), yes)
+FEATURE_CFLAGS += -D'CONFIG_GL32XX_SPI=1'
+PROGRAMMER_OBJS += gl32xx_spi.o
+NEED_LIBUSB1 += CONFIG_GL32XX_SPI
 endif
 
 ifeq ($(CONFIG_NI845X_SPI), yes)

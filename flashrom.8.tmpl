@@ -345,6 +345,8 @@ bitbanging adapter)
 .sp
 .BR "* stlinkv3_spi" " (for SPI flash ROMs attached to STMicroelectronics STLINK V3 devices)"
 .sp
+.BR "* gl32xx_spi" " (for SPI flash ROMs attached to Genesys Logic, Inc USB Memory Card Reader Controller devices)"
+.sp
 Some programmers have optional or mandatory parameters which are described
 in detail in the
 .B PROGRAMMER-SPECIFIC INFORMATION
@@ -1315,6 +1317,33 @@ The SPI speed can be selected by using the
 syntax where \fBfrequency\fP is the SPI clock frequency in kHz.
 If the passed frequency is not supported by the adapter the nearest lower
 supported frequency will be used.
+.SS
+.BR "gl32xx_spi " programmer
+This module supports SPI flash programming through the Genesys Logic, Inc USB Memory
+Card Reader Controller devices.
+.sp
+.B "  flashrom \-p gl32xx_spi"
+.sp
+If there is more than one compatible device connected, you can select which one
+should be used by specifying its serial number with the
+.sp
+.B "  flashrom \-p gl32xx_spi:serial=number"
+.sp
+syntax where
+.B number
+is the serial number of the device (which can be found for example in the
+output of lsusb -v).
+.sp
+VID:PID can be changed by the product vendor. To program these devices, the custom
+PID and VID should be provided as programmer params with the
+.sp
+.B "  flashrom \-p gl32xx_spi:vid=0xXXXX:pid=0xXXXX"
+.sp
+syntax where
+.B vid
+is the vendor ID and
+.B pid
+is the product ID (which can be found in the output of lsusb).
 .SS
 
 .SH EXAMPLES
